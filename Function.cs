@@ -27,6 +27,19 @@ namespace PWABuilder.SafeImage
                 return new BadRequestResult();
             }
 
+            // See if we're asked to simply check the existence of the image.
+            bool.TryParse(req.Query["checkExistsOnly"], out var checkExistsOnly);
+            if (checkExistsOnly)
+            {
+                // Sending HTTP HEAD checks for the existence of a resource without downloading it.
+                using var headMsg = new HttpRequestMessage(HttpMethod.Head, uri)
+                {
+                    Version = new Version(2, 0)
+                };
+                var headResult = await http.SendAsync(headMsg);
+                return new StatusCodeResult((int)headResult.StatusCode);
+            }
+
             using var getMsg = new HttpRequestMessage(HttpMethod.Get, uri)
             {
                 Version = new Version(2, 0)
