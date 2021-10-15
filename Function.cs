@@ -13,7 +13,9 @@ namespace PWABuilder.SafeImage
 {
     public static class Function
     {
-        private static readonly HttpClient http = new HttpClient();
+        private static readonly HttpClient http = CreateHttp();
+        
+        private const string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36 Edg/94.0.992.50";
 
         [FunctionName("GetSafeUrl")]
         public static async Task<IActionResult> Run(
@@ -62,6 +64,13 @@ namespace PWABuilder.SafeImage
 
             var imgStream = await getResult.Content.ReadAsStreamAsync();
             return new FileStreamResult(imgStream, contentType.MediaType);
+        }
+
+        private static HttpClient CreateHttp()
+        {
+            var http = new HttpClient();
+            http.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+            return http;
         }
     }
 }
