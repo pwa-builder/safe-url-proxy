@@ -1,3 +1,5 @@
+Please use our [main repository for any issues/bugs/features suggestion](https://github.com/pwa-builder/PWABuilder/issues/new/choose).
+
 # safe-url-proxy
 Azure function app that fetches a URL and returns its contents. This is used by PWABuilder to get around cross-origin request limitations.
 
