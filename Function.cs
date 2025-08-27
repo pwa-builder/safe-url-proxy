@@ -24,7 +24,6 @@ public class Function
     public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
     {
         log.LogInformation("C# HTTP trigger function processed a request.");
-        var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://www.example.com");
         // User agent is now set globally in the constructor
 
         var query = System.Web.HttpUtility.ParseQueryString(req.Url.Query);
